@@ -1,7 +1,7 @@
 # multimodal_llm
 A flask app for custom-data finetuned llama3 for banking chat service.
 
-This is a simple multimodal (handles speech and text) Flask application that uses the finetuned llama3. The 'finetuning' was done on custom-dataset created using LLMs itself. (So, basically I prompted LLMs to create prompts so I can finetune LLM to handle prompts. Make it make sense.) Anyhoo you can find the dataset on my [huggingface profile](https://huggingface.co/suDEEP101). The name might not be exact as I might change it later on but any dataset with 'bank' keyword should be the one! Also, you can download the GGUF file (i.e. our actual finetuned model) from my huggingface profile as well. Exact name might be different but you can use anyone that has 'bank' keyword to it. I'd suggest you to use the ~4GB GGUF file.
+This is a simple multimodal (handles speech and text) Flask application that uses the finetuned llama3. The 'finetuning' was done on custom-dataset created using LLMs itself. (So, basically I prompted LLMs to create prompts so I can finetune LLM to handle prompts. Make it make sense.) Anyhoo you can find the dataset on my [huggingface profile](https://huggingface.co/datasets/suDEEP101/extended_bank/tree/main). Also, you can download the GGUF file (i.e. our actual finetuned model) from my [here](https://huggingface.co/suDEEP101/refined_dataset_model/tree/main).
 
 Note that there's no frontend for this application as of yet. You must use Postman for hitting the URLs to get a response from the model. The frontend part of the application is soon to follow! For running the application:
 
@@ -18,4 +18,4 @@ I'd suggest that you download the ~4GB GGUF. Then move this GGUF file inside the
 6. Run the flask app by using the command below:
 `flask --app app.py run`
 
-If everything went well then your application should run on (`http://127.0.0.1:5000`). Then you can use Postman to hit the URLS i.e. `http://127.0.0.1:5000/text` to send text prompts and `http://127.0.0.1:5000/audio` to send audio prompts. You can check the demonstration in this [video]().
+If everything went well then your application should run on (`http://127.0.0.1:5000`). Then you can use Postman to hit the URLS i.e. `http://127.0.0.1:5000/text` to send text prompts and `http://127.0.0.1:5000/audio` to send audio prompts. You can check the demonstration in this [video](https://youtu.be/xGl9bjgwqcU).
