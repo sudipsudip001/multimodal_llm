@@ -18,4 +18,4 @@ I'd suggest that you download the ~4GB GGUF. Then move this GGUF file inside the
 6. Run the flask app by using the command below:
 `flask --app app.py run`
 
-If everything went well then your application should run on (`http://127.0.0.1:5000`). Then you can use Postman to hit the URLS i.e. `http://127.0.0.1:5000/text` to send text prompts and `http://127.0.0.1:5000/audio` to send audio prompts. You can check the demonstration in this [video](https://youtu.be/xGl9bjgwqcU).
+If everything went well then your application should run on (`http://127.0.0.1:5000`). Then you can use Postman to hit the URLS i.e. `http://127.0.0.1:5000/text` to send text prompts and `http://127.0.0.1:5000/audio` to send audio prompts. You can check the demonstration in this [video](https://youtu.be/K5G9MxUSJqg).
