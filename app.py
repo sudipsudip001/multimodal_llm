@@ -3,7 +3,7 @@ from llama_cpp import Llama
 import whisper
 import pyttsx3
 
-model = Llama(model_path="best_model.gguf", n_ctx=2048, n_threads=4)
+model = Llama(model_path="extended_bank_8bit.gguf", n_ctx=2048, n_threads=4)  # change the name of the model according to the one you downloaded.
 whisper_model = whisper.load_model("base")
 
 app = Flask(__name__)
@@ -15,9 +15,17 @@ def home():
 @app.route('/text', methods=['POST'])
 def generate():
     prompt = request.json['prompt']
-    output = model(prompt, max_tokens=50)
-    response_text = output['choices'][0]['text']
+    customer_prompt = f"""Below is an instruction that describes a question from customer. Write the answer to 
+    the question so that you answer in exact, concise and polite.
+    ### Instruction:
+    {prompt}
 
+    ### Input:
+    
+    ### Response
+    """
+    output = model(customer_prompt, max_tokens=100, stop=['###'])
+    response_text = output['choices'][0]['text'].strip()
     return jsonify({"response" : response_text})
 
 @app.route('/audio', methods=['POST'])
@@ -28,10 +36,19 @@ def audio_generate():
     result = whisper_model.transcribe("audios/recording.wav")
     result_text = result['text']
 
-    prompt = result_text
-    output = model(prompt, max_tokens=50)
-    response_text = output['choices'][0]['text']
+    customer_prompt = f"""Below is an instruction that describes a question from customer. Write the answer to 
+    the question so that you answer in exact, concise and polite.
+    ### Instruction:
+    {result_text}
 
+    ### Input:
+    
+    ### Response
+    """
+    output = model(customer_prompt, max_tokens=100, stop=['###'])
+    response_text = output['choices'][0]['text'].strip()
+
+    #produce audio
     engine = pyttsx3.init()
     engine.say(response_text)
     engine.runAndWait()

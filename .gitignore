@@ -1,0 +1,5 @@
+__pycache__
+.git
+conda_runner
+conda_runner_bat
+extended_bank_8bit.gguf
