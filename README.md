@@ -1,7 +1,7 @@
 # multimodal_llm
 A flask app of custom-data finetuned llama3 for banking chat service.
 
-This is a simple multimodal (handles speech and text) Flask application that uses the finetuned llama3. The 'finetuning' was done on custom-dataset created using LLMs itself. (So, basically I prompted LLMs to create prompts so I can finetune LLM to handle prompts. Make it make sense.) Anyhoo you can find the dataset on my [huggingface profile](https://huggingface.co/datasets/suDEEP101/extended_bank/tree/main). Also, you can download the GGUF file (i.e. our actual finetuned model) from my [here](https://huggingface.co/suDEEP101/refined_dataset_model/tree/main).
+This is a simple multimodal (handles speech and text) Flask application that uses the finetuned llama3. The 'finetuning' was done on custom-dataset created using LLMs itself. (So, basically I prompted LLMs to create prompts so I can finetune LLM to handle prompts. Make it make sense.) Anyhoo you can find the dataset from [huggingface](https://huggingface.co/datasets/suDEEP101/bank_customer_support/tree/main). Also, you can download the GGUF file (i.e. our actual finetuned model) from my [here](https://huggingface.co/suDEEP101/bank_customer_service/tree/main).
 
 Note that there's no frontend for this application as of yet. You must use Postman for hitting the URLs to get a response from the model. The frontend part of the application is soon to follow! For running the application:
 
