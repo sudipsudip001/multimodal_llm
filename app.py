@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from llama_cpp import Llama
 import whisper
 import pyttsx3
+import os
 
-model = Llama(model_path="extended_bank_8bit.gguf", n_ctx=2048, n_threads=4)  # change the name of the model according to the one you downloaded.
+model = Llama(model_path="bank_customer_support.gguf", n_ctx=2048, n_threads=4)  # change the name of the model according to the one you downloaded.
 whisper_model = whisper.load_model("base")
 
 app = Flask(__name__)
@@ -16,7 +17,7 @@ def home():
 def generate():
     prompt = request.json['prompt']
     customer_prompt = f"""Below is an instruction that describes a question from customer. Write the answer to 
-    the question so that you answer in exact, concise and polite.
+    the question so that you answer in concise and polite.
     ### Instruction:
     {prompt}
 
@@ -24,7 +25,7 @@ def generate():
     
     ### Response
     """
-    output = model(customer_prompt, max_tokens=100, stop=['###'])
+    output = model(customer_prompt, max_tokens=150, stop=['###'])
     response_text = output['choices'][0]['text'].strip()
     return jsonify({"response" : response_text})
 
@@ -34,10 +35,11 @@ def audio_generate():
     audio.save('audios/recording.wav')
 
     result = whisper_model.transcribe("audios/recording.wav")
+    os.remove('audios/recording.wav')
     result_text = result['text']
 
     customer_prompt = f"""Below is an instruction that describes a question from customer. Write the answer to 
-    the question so that you answer in exact, concise and polite.
+    the question so that you answer in concise and polite.
     ### Instruction:
     {result_text}
 
@@ -45,15 +47,18 @@ def audio_generate():
     
     ### Response
     """
-    output = model(customer_prompt, max_tokens=100, stop=['###'])
+    output = model(customer_prompt, max_tokens=150, stop=['###'])
     response_text = output['choices'][0]['text'].strip()
 
     #produce audio
     engine = pyttsx3.init()
-    engine.say(response_text)
+
+    if os.path.exists('audios/output.mp3'):
+        os.remove('audios/output.mp3')
+    engine.save_to_file(response_text, 'audios/output.mp3')
     engine.runAndWait()
 
-    return jsonify({"response" : 'audio outputted'})
+    return send_file('audios/output.mp3', mimetype='audio/mp3')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
